@@ -1,0 +1,25 @@
+{
+  "name": "attraction-wars-bots",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc",
+    "run": "node ./dist/index.js",
+    "dev": "concurrently --kill-others \"tsc --watch\" \"nodemon ./dist/src/index.js\"",
+    "lint": "tslint ./src/**/*.ts"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@types/socket.io": "^2.1.2",
+    "attraction-wars-client-storage": "git+https://github.com/harentius/attraction-wars-client-storage.git"
+  },
+  "devDependencies": {
+    "concurrently": "^4.1.2",
+    "eslint-plugin-promise": "^4.2.1",
+    "nodemon": "^1.19.2",
+    "tslint": "^5.19.0",
+    "typescript": "^3.6.2"
+  }
+}
