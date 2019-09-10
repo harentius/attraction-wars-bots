@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "tsc",
-    "run": "node ./dist/src/index.js",
+    "start": "node ./dist/src/index.js",
     "dev": "concurrently --kill-others \"tsc --watch\" \"nodemon ./dist/src/index.js\"",
     "lint": "tslint ./src/**/*.ts"
   },
