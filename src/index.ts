@@ -1,5 +1,4 @@
-import Client from '../node_modules/attraction-wars-client-storage/src/Client';
-import Storage from '../node_modules/attraction-wars-client-storage/src/Storage';
+import { Storage, Client } from 'attraction-wars-client-storage';
 
 const serverUrl = process.env.SERVER_URL || 'http://localhost:4000';
 
@@ -11,7 +10,6 @@ for (let i = 0; i < n; i++) {
 }
 
 const clients = [];
-
 for (const bot of bots) {
   const storage = new Storage();
   const client = new Client(storage, serverUrl);
