@@ -1,25 +1,21 @@
 import { Storage, Client } from 'attraction-wars-client-storage';
-
+import Bot from './Bot';
 const serverUrl = process.env.SERVER_URL || 'http://localhost:4000';
 
 const n = 10;
-const bots = [];
+const botNames = [];
 
 for (let i = 0; i < n; i++) {
-  bots.push({name: `test${i}`, socket: null});
+  botNames.push(`test${i}`);
 }
 
-const clients = [];
-for (const bot of bots) {
+const bots: Bot[] = [];
+
+for (const botName of botNames) {
   const storage = new Storage();
   const client = new Client(storage, serverUrl);
-  client.login(bot);
-  client.sendKeysPressState({
-    up: false,
-    down: false,
-    left: false,
-    right: true,
-    space: false,
-  });
-  clients.push(client);
+  const bot = new Bot(botName, client, storage);
+  bots.push(bot);
+  bot.login();
+  bot.triggerLeft();
 }
