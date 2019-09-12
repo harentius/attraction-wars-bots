@@ -1,9 +1,9 @@
 import { Storage, Client } from 'attraction-wars-client-storage';
 import config from '../config';
-import KeysPressState from '../KeysPressState';
+import KeysPressState from '../storage/KeysPressState';
 import isCirclesIntersect from '../utils/isCirclesIntersect';
 import calculateDistance from '../utils/calculateDistance';
-import Point from '../Point';
+import Circle from '../storage/Circle';
 
 class Bot {
   private readonly name: string;
@@ -46,19 +46,19 @@ class Bot {
     this.client.sendKeysPressState(keyPressState);
   }
 
-  public getVisibleAsteroids() {
+  public getVisibleAsteroids(): Circle[] {
     return this.filterVisibleObjects(this.storage.worldData.asteroidsData);
   }
 
-  public getVisiblePlayers() {
+  public getVisiblePlayers(): Circle[] {
     return this.filterVisibleObjects(this.storage.worldData.playersData);
   }
 
-  public getPlayerData(): Point {
+  public getPlayerData(): Circle {
     return this.storage.playerData;
   }
 
-  private triggerArrowKey(name: string, isPress: boolean) {
+  private triggerArrowKey(name: string, isPress: boolean): void {
     const keyPressState = this.keyPressState.clone();
     keyPressState[name] = isPress;
     this.updateKeyPressState(keyPressState);
@@ -71,7 +71,7 @@ class Bot {
     }
   }
 
-  private filterVisibleObjects(data) {
+  private filterVisibleObjects(data): Circle[] {
     const horizon = this.getVisibilityArea();
 
     return Object.values(data)
@@ -83,11 +83,11 @@ class Bot {
         const d2 = calculateDistance(horizon, v2);
 
         return d1 < d2 ? 1 : -1;
-      })
+      }) as Circle[]
     ;
   }
 
-  private getVisibilityArea() {
+  private getVisibilityArea(): Circle {
     return {
       x: this.storage.playerData.x,
       y: this.storage.playerData.y,
