@@ -3,6 +3,7 @@ import config from '../config';
 import KeysPressState from '../storage/KeysPressState';
 import isCirclesIntersect from '../utils/isCirclesIntersect';
 import calculateDistance from '../utils/calculateDistance';
+import GameObject from '../storage/GameObject';
 import Circle from '../storage/Circle';
 
 class Bot {
@@ -22,23 +23,23 @@ class Bot {
     this.client.login(this.name);
   }
 
-  public triggerLeft(isPress: boolean = true): void {
+  public moveLeft(isPress: boolean = true): void {
     this.triggerArrowKey('left', isPress);
   }
 
-  public triggerRight(isPress: boolean = true): void {
+  public moveRight(isPress: boolean = true): void {
     this.triggerArrowKey('right', isPress);
   }
 
-  public triggerUp(isPress: boolean = true): void {
+  public moveUp(isPress: boolean = true): void {
     this.triggerArrowKey('up', isPress);
   }
 
-  public triggerDown(isPress: boolean = true): void {
+  public moveDown(isPress: boolean = true): void {
     this.triggerArrowKey('down', isPress);
   }
 
-  public triggerSpace(): void {
+  public pressSpace(): void {
     const keyPressState = this.keyPressState.clone();
     keyPressState.space = true;
     this.client.sendKeysPressState(keyPressState);
@@ -46,16 +47,20 @@ class Bot {
     this.client.sendKeysPressState(keyPressState);
   }
 
-  public getVisibleAsteroids(): Circle[] {
+  public getVisibleAsteroids(): GameObject[] {
     return this.filterVisibleObjects(this.storage.worldData.asteroidsData);
   }
 
-  public getVisiblePlayers(): Circle[] {
+  public getVisiblePlayers(): GameObject[] {
     return this.filterVisibleObjects(this.storage.worldData.playersData);
   }
 
-  public getPlayerData(): Circle {
+  public getPlayerData(): GameObject {
     return this.storage.playerData;
+  }
+
+  public getWorldData(): object {
+    return this.storage.worldData;
   }
 
   private triggerArrowKey(name: string, isPress: boolean): void {
@@ -71,19 +76,19 @@ class Bot {
     }
   }
 
-  private filterVisibleObjects(data): Circle[] {
-    const horizon = this.getVisibilityArea();
+  private filterVisibleObjects(data): GameObject[] {
+    const visibilityArea = this.getVisibilityArea();
 
     return Object.values(data)
       .filter((v: any) => {
-        return isCirclesIntersect(horizon, v);
+        return isCirclesIntersect(visibilityArea, v);
       })
       .sort((v1, v2) => {
-        const d1 = calculateDistance(horizon, v1);
-        const d2 = calculateDistance(horizon, v2);
+        const d1 = calculateDistance(visibilityArea, v1);
+        const d2 = calculateDistance(visibilityArea, v2);
 
         return d1 < d2 ? 1 : -1;
-      }) as Circle[]
+      }) as GameObject[]
     ;
   }
 
