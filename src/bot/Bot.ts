@@ -1,5 +1,4 @@
 import { Storage, Client } from 'attraction-wars-client-storage';
-import config from '../config';
 import KeysPressState from '../storage/KeysPressState';
 import isCirclesIntersect from '../utils/isCirclesIntersect';
 import calculateDistance from '../utils/calculateDistance';
@@ -11,11 +10,13 @@ class Bot {
   private readonly client: Client;
   private readonly storage: Storage;
   private keyPressState: KeysPressState;
+  private visibilityRadius: number;
 
-  constructor(name: string, client: Client, storage: Storage) {
+  constructor(name: string, client: Client, storage: Storage, visibilityRadius: number) {
     this.name = name;
     this.client = client;
     this.storage = storage;
+    this.visibilityRadius = visibilityRadius;
     this.keyPressState = new KeysPressState();
   }
 
@@ -47,6 +48,10 @@ class Bot {
     this.client.sendKeysPressState(keyPressState);
   }
 
+  public stop() {
+    this.updateKeyPressState(new KeysPressState());
+  }
+
   public getVisibleAsteroids(): GameObject[] {
     return this.filterVisibleObjects(this.storage.worldData.asteroidsData);
   }
@@ -59,7 +64,7 @@ class Bot {
     return this.storage.playerData;
   }
 
-  public getWorldData(): object {
+  public getWorldData(): any {
     return this.storage.worldData;
   }
 
@@ -76,7 +81,8 @@ class Bot {
     }
   }
 
-  private filterVisibleObjects(data): GameObject[] {
+  //TODO
+  private filterVisibleObjects(data: {[key: string]: GameObject}): GameObject[] {
     const visibilityArea = this.getVisibilityArea();
 
     return Object.values(data)
@@ -96,7 +102,7 @@ class Bot {
     return {
       x: this.storage.playerData.x,
       y: this.storage.playerData.y,
-      r: this.storage.playerData.r + config.visibilityRadius,
+      r: this.storage.playerData.r + this.visibilityRadius,
     };
   }
 }
