@@ -1,9 +1,9 @@
 import { Storage, Client } from 'attraction-wars-client-storage';
 import KeysPressState from '../storage/KeysPressState';
-import isCirclesIntersect from '../utils/isCirclesIntersect';
-import calculateDistance from '../utils/calculateDistance';
+import isCirclesIntersect from '../math-utils/isCirclesIntersect';
+import calculateCirclesDistance from '../math-utils/calculateCirclesDistance';
 import GameObject from '../storage/GameObject';
-import Circle from '../storage/Circle';
+import Circle from '../math-utils/types/Circle';
 
 class Bot {
   private readonly name: string;
@@ -81,19 +81,18 @@ class Bot {
     }
   }
 
-  //TODO
   private filterVisibleObjects(data: {[key: string]: GameObject}): GameObject[] {
     const visibilityArea = this.getVisibilityArea();
 
-    return Object.values(data)
+    return  Object.values(data)
       .filter((v: any) => {
         return isCirclesIntersect(visibilityArea, v);
       })
       .sort((v1, v2) => {
-        const d1 = calculateDistance(visibilityArea, v1);
-        const d2 = calculateDistance(visibilityArea, v2);
+        const d1 = calculateCirclesDistance(this.storage.playerData, v1);
+        const d2 = calculateCirclesDistance(this.storage.playerData, v2);
 
-        return d1 < d2 ? 1 : -1;
+        return d1 > d2 ? 1 : -1;
       }) as GameObject[]
     ;
   }

@@ -6,10 +6,10 @@ storage.refresh(
   // World Data
   {
     asteroidsData: {
-      0: { x: 100, y: 100, r: 30 }, // circle is inside vision
-      1: { x: 250, y: 250, r: 50 }, // circle is out of vision
-      2: { x: 200, y: 200, r: 60 }, // center is out of vision, circle is in vision
-      3: { x: 140, y: 140, r: 60 }, // center is in vision, circle is partially out vision
+      0: { x: 100, y: 0, r: 30 }, // circle is inside vision
+      1: { x: 250, y: 0, r: 50 }, // circle is out of vision
+      2: { x: 200, y: 0, r: 60 }, // center is out of vision, circle is in vision
+      3: { x: 140, y: 0, r: 60 }, // center is in vision, circle is partially out vision
     },
   },
 
@@ -25,9 +25,9 @@ describe('Bot vision', () => {
     const visibleObjects = bot.getVisibleAsteroids();
 
     expect(visibleObjects).toEqual([
-      { x: 100, y: 100, r: 30 },
-      { x: 140, y: 140, r: 60 },
-      { x: 200, y: 200, r: 60 },
+      { x: 100, y: 0, r: 30 },
+      { x: 140, y: 0, r: 60 },
+      { x: 200, y: 0, r: 60 },
     ]);
   });
 });

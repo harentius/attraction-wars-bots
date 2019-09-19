@@ -1,4 +1,4 @@
-import GameObject from '../storage/GameObject';
+import GameObject from '../../../storage/GameObject';
 
 class Target {
   public static TARGET_ASTEROID = 0;
