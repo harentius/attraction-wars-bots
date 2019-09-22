@@ -52,6 +52,12 @@ each([
   ],
 
   [
+    {x: 5, y: 6, r: 2.12},
+    {direction: Direction.DIRECTION_DOWN_LEFT},
+    [{x1: 6.5, y1: 4.5, x2: 5, y2: 3}, {x1: 3.5, y1: 7.5, x2: 2, y2: 6}],
+  ],
+
+  [
     {x: 5, y: 6, r: 2},
     {direction: Direction.DIRECTION_DOWN},
     [{x1: 3, y1: 6, x2: 3, y2: 4}, {x1: 7, y1: 6, x2: 7, y2: 4}],
