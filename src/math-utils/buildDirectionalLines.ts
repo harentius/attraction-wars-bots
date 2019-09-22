@@ -123,6 +123,23 @@ const buildDirectionalLines = (circle: Circle, direction: Direction): Line[] => 
       ];
     }
 
+    case Direction.DIRECTION_DOWN_RIGHT: {
+      return [
+        {
+          x1: circle.x - circle.r * Math.sin(Math.PI / 4),
+          y1: circle.y - circle.r * Math.cos(Math.PI / 4),
+          x2: circle.x,
+          y2: circle.y - circle.r * Math.sqrt(2),
+        },
+        {
+          x1: circle.x + circle.r * Math.sin(Math.PI / 4),
+          y1: circle.y + circle.r * Math.cos(Math.PI / 4),
+          x2: circle.x + circle.r * Math.sqrt(2),
+          y2: circle.y,
+        },
+      ];
+    }
+
     default: {
       throw new Error('Not implemented');
     }
