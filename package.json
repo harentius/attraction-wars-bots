@@ -15,7 +15,8 @@
   "license": "ISC",
   "dependencies": {
     "@types/socket.io": "^2.1.2",
-    "attraction-wars-client-storage": "git+https://github.com/harentius/attraction-wars-client-storage.git"
+    "attraction-wars-client-storage": "git+https://github.com/harentius/attraction-wars-client-storage.git",
+    "intersects": "^2.7.1"
   },
   "devDependencies": {
     "@types/jest": "^24.0.18",
