@@ -21,6 +21,23 @@ const buildDirectionalLines = (circle: Circle, direction: Direction): Line[] => 
       ];
     }
 
+    case Direction.DIRECTION_TOP_RIGHT: {
+      return [
+        {
+          x1: circle.x + circle.r * Math.cos(direction.direction),
+          y1: circle.y - circle.r * Math.sin(direction.direction),
+          x2: circle.x + circle.r * Math.sqrt(2),
+          y2: circle.y,
+        },
+        {
+          x1: circle.x - circle.r * Math.cos(direction.direction),
+          y1: circle.y + circle.r * Math.sin(direction.direction),
+          x2: circle.x,
+          y2: circle.y + circle.r * Math.sqrt(2),
+        },
+      ];
+    }
+
     case Direction.DIRECTION_TOP: {
       return [
         {
