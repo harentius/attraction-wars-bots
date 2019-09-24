@@ -20,15 +20,6 @@ class TargetManager {
     return new Target(Target.TARGET_ASTEROID, closestAbsorbableAsteroid);
   }
 
-  public selectDirections(
-    target: Target,
-    playerData: GameObject,
-    visiblePlayers: GameObject[],
-    visibleAsteroids: GameObject[],
-  ) {
-
-  }
-
   public isTargetObjectExists(
     target: Target,
     visiblePlayers: GameObject[],

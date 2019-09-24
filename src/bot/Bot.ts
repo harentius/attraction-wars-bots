@@ -24,34 +24,6 @@ class Bot {
     this.client.login(this.name);
   }
 
-  public moveLeft(isPress: boolean = true): void {
-    this.triggerArrowKey('left', isPress);
-  }
-
-  public moveRight(isPress: boolean = true): void {
-    this.triggerArrowKey('right', isPress);
-  }
-
-  public moveUp(isPress: boolean = true): void {
-    this.triggerArrowKey('up', isPress);
-  }
-
-  public moveDown(isPress: boolean = true): void {
-    this.triggerArrowKey('down', isPress);
-  }
-
-  public pressSpace(): void {
-    const keyPressState = this.keyPressState.clone();
-    keyPressState.space = true;
-    this.client.sendKeysPressState(keyPressState);
-    keyPressState.space = false;
-    this.client.sendKeysPressState(keyPressState);
-  }
-
-  public stop() {
-    this.updateKeyPressState(new KeysPressState());
-  }
-
   public getVisibleAsteroids(): GameObject[] {
     return this.filterVisibleObjects(this.storage.worldData.asteroidsData);
   }
@@ -68,13 +40,7 @@ class Bot {
     return this.storage.worldData;
   }
 
-  private triggerArrowKey(name: string, isPress: boolean): void {
-    const keyPressState = this.keyPressState.clone();
-    keyPressState[name] = isPress;
-    this.updateKeyPressState(keyPressState);
-  }
-
-  private updateKeyPressState(keyPressState: KeysPressState): void {
+  public setKeyPressState(keyPressState: KeysPressState): void {
     if (!this.keyPressState.isEqual(keyPressState)) {
       this.keyPressState = keyPressState;
       this.client.sendKeysPressState(keyPressState);

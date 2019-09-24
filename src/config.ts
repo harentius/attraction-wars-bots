@@ -4,12 +4,12 @@ const config: {
   serverUrl: string,
   visibilityRadius: number,
   tickInterval: number,
-  maxDangerDistance: number,
+  minDangerDistance: number,
 } = {
   serverUrl,
   visibilityRadius: 400,
   tickInterval: 100,
-  maxDangerDistance: 50,
+  minDangerDistance: 50,
 };
 
 export default config;

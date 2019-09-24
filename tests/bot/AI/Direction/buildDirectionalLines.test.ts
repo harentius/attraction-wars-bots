@@ -1,8 +1,8 @@
 import each from 'jest-each';
-import buildDirectionalLines from '../../src/math-utils/buildDirectionalLines';
-import Circle from '../../src/math-utils/types/Circle';
-import Line from '../../src/math-utils/types/Line';
-import Direction from '../../src/math-utils/types/Direction';
+import buildDirectionalLines from '../../../../src/bot/AI/Direction/buildDirectionalLines';
+import Circle from '../../../../src/math-utils/types/Circle';
+import Line from '../../../../src/math-utils/types/Line';
+import Direction from '../../../../src/bot/AI/Direction/Direction';
 
 const normalizeNumbersPrecision = (objects: object[], precision = 2) => {
   const normalizedData = [];

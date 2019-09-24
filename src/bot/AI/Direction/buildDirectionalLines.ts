@@ -1,6 +1,6 @@
-import Line from './types/Line';
-import Circle from './types/Circle';
-import Direction from './types/Direction';
+import Line from '../../../math-utils/types/Line';
+import Circle from '../../../math-utils/types/Circle';
+import Direction from './Direction';
 
 const buildDirectionalLines = (circle: Circle, direction: Direction): Line[] => {
   switch (direction.direction) {
