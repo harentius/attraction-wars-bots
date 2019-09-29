@@ -17,7 +17,7 @@ for (let i = 0; i < n; i++) {
 const botAIs: BotAI[] = [];
 
 const targetManager = new TargetManager();
-const directionManager = new DirectionManager(config.minDangerDistance);
+const directionManager = new DirectionManager(config.minDangerDistance, config.visibilityRadius);
 const keyPressStateFactory = new KeysPressStateFactory();
 
 for (const botName of botNames) {

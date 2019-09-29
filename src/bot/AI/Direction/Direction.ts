@@ -9,9 +9,7 @@ class Direction {
   public static DIRECTION_DOWN = 3 / 2 * Math.PI;
   public static DIRECTION_DOWN_RIGHT = 7 / 4 * Math.PI;
 
-  public direction: number;
-
-  public getPossibleDirections(): number[] {
+  public static getPossibleDirections(): number[] {
     return [
       Direction.DIRECTION_RIGHT,
       Direction.DIRECTION_TOP_RIGHT,
@@ -22,6 +20,24 @@ class Direction {
       Direction.DIRECTION_DOWN,
       Direction.DIRECTION_DOWN_RIGHT,
     ];
+  }
+
+  public readonly direction: number;
+  public readonly angle: number;
+
+  public constructor(angle: number) {
+    this.angle = angle;
+
+    let lowestDiff = null;
+
+    for (const possibleDirection of Direction.getPossibleDirections()) {
+      const diff = Math.abs(angle - possibleDirection);
+
+      if (lowestDiff === null || diff < lowestDiff) {
+        lowestDiff = diff;
+        this.direction = possibleDirection;
+      }
+    }
   }
 }
 

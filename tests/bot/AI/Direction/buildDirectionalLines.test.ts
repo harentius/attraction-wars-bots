@@ -11,7 +11,11 @@ const normalizeNumbersPrecision = (objects: object[], precision = 2) => {
     const res = {};
 
     for (const [key, value] of Object.entries(element)) {
-      res[key] = Math.round(value * Math.pow(10, precision)) / Math.pow(10, precision);
+      if (key === 'direction') {
+        res[key] = value;
+      } else {
+        res[key] = Math.round(value * Math.pow(10, precision)) / Math.pow(10, precision);
+      }
     }
 
     normalizedData.push(res);
@@ -23,53 +27,77 @@ const normalizeNumbersPrecision = (objects: object[], precision = 2) => {
 each([
   [
     {x: 5, y: 6, r: 2},
-    {direction: Direction.DIRECTION_RIGHT},
-    [{x1: 5, y1: 4, x2: 7, y2: 4}, {x1: 5, y1: 8, x2: 7, y2: 8}],
+    Direction.DIRECTION_RIGHT,
+    [
+      {x1: 5, y1: 4, x2: 407, y2: 4},
+      {x1: 5, y1: 8, x2: 407, y2: 8},
+    ],
   ],
 
   [
     {x: 5, y: 6, r: 2.12},
-    {direction: Direction.DIRECTION_TOP_RIGHT},
-    [{x1: 6.5, y1: 4.5, x2: 8, y2: 6}, {x1: 3.5, y1: 7.5, x2: 5, y2: 9}],
+    Direction.DIRECTION_TOP_RIGHT,
+    [
+      {x1: 6.5, y1: 4.5, x2: 290.84, y2: 288.84},
+      {x1: 3.5, y1: 7.5, x2: 287.84, y2: 291.84},
+    ],
   ],
 
   [
     {x: 5, y: 6, r: 2},
-    {direction: Direction.DIRECTION_TOP},
-    [{x1: 3, y1: 6, x2: 3, y2: 8}, {x1: 7, y1: 6, x2: 7, y2: 8}],
+    Direction.DIRECTION_TOP,
+    [
+      {x1: 3, y1: 6, x2: 3, y2: 408},
+      {x1: 7, y1: 6, x2: 7, y2: 408},
+      ],
   ],
 
   [
     {x: 5, y: 6, r: 2.12},
-    {direction: Direction.DIRECTION_TOP_LEFT},
-    [{x1: 3.5, y1: 4.5, x2: 2, y2: 6}, {x1: 6.5, y1: 7.5, x2: 5, y2: 9}],
+    Direction.DIRECTION_TOP_LEFT,
+    [
+      {x1: 3.5, y1: 4.5, x2: -280.84, y2: 288.84},
+      {x1: 6.5, y1: 7.5, x2: -277.84, y2: 291.84},
+    ],
   ],
 
   [
     {x: 5, y: 6, r: 2},
-    {direction: Direction.DIRECTION_LEFT},
-    [{x1: 5, y1: 4, x2: 3, y2: 4}, {x1: 5, y1: 8, x2: 3, y2: 8}],
+    Direction.DIRECTION_LEFT,
+    [
+      {x1: 5, y1: 4, x2: -397, y2: 4},
+      {x1: 5, y1: 8, x2: -397, y2: 8},
+    ],
   ],
 
   [
     {x: 5, y: 6, r: 2.12},
-    {direction: Direction.DIRECTION_DOWN_LEFT},
-    [{x1: 6.5, y1: 4.5, x2: 5, y2: 3}, {x1: 3.5, y1: 7.5, x2: 2, y2: 6}],
+    Direction.DIRECTION_DOWN_LEFT,
+    [
+      {x1: 6.5, y1: 4.5, x2: -277.84, y2: -279.84},
+      {x1: 3.5, y1: 7.5, x2: -280.84, y2: -276.84},
+    ],
   ],
 
   [
     {x: 5, y: 6, r: 2},
-    {direction: Direction.DIRECTION_DOWN},
-    [{x1: 3, y1: 6, x2: 3, y2: 4}, {x1: 7, y1: 6, x2: 7, y2: 4}],
+    Direction.DIRECTION_DOWN,
+    [
+      {x1: 3, y1: 6, x2: 3, y2: -396},
+      {x1: 7, y1: 6, x2: 7, y2: -396},
+    ],
   ],
 
   [
     {x: 5, y: 6, r: 2.12},
-    {direction: Direction.DIRECTION_DOWN_RIGHT},
-    [{x1: 3.5, y1: 4.5, x2: 5, y2: 3}, {x1: 6.5, y1: 7.5, x2: 8, y2: 6}],
+    Direction.DIRECTION_DOWN_RIGHT,
+    [
+      {x1: 3.5, y1: 4.5, x2: 287.84, y2: -279.84},
+      {x1: 6.5, y1: 7.5, x2: 290.84, y2: -276.84},
+    ],
   ],
-]).test('Build Directional Lines', (circle: Circle, direction: Direction, expectedLines: Line[]) => {
-  const directionalLines = normalizeNumbersPrecision(buildDirectionalLines(circle, direction));
+]).test('Build Directional Lines', (circle: Circle, direction: number, expectedLines: Line[]) => {
+  const directionalLines = normalizeNumbersPrecision(buildDirectionalLines(circle, direction, 400));
 
   expect(directionalLines).toEqual(expectedLines);
 });

@@ -38,7 +38,15 @@ class BotAI {
       this.target = this.targetManager.selectTarget(playerData, visiblePlayers, visibleAsteroids);
     }
 
-    const direction = this.directionManager.selectDirection(playerData, this.target, visiblePlayers, visibleAsteroids);
+    const worldData = this.bot.getWorldData();
+    const direction = this.directionManager.selectDirection(
+      playerData,
+      this.target,
+      visiblePlayers,
+      visibleAsteroids,
+      worldData.relativeZonesSizes[2],
+      worldData.asteroidAttractionRadiusMultiplier,
+    );
     this.move(direction);
   }
 
