@@ -5,6 +5,7 @@ import BotAI from './bot/AI/BotAI';
 import TargetManager from './bot/AI/Target/TargetManager';
 import DirectionManager from './bot/AI/Direction/DirectionManager';
 import KeysPressStateFactory from './bot/AI/KeysPressStateFactory';
+import DangerObjectManager from './bot/AI/Direction/DangerObjectManager';
 const { serverUrl } = config;
 
 const n = 1;
@@ -17,7 +18,8 @@ for (let i = 0; i < n; i++) {
 const botAIs: BotAI[] = [];
 
 const targetManager = new TargetManager();
-const directionManager = new DirectionManager(config.minDangerDistance, config.visibilityRadius);
+const dangerObjectManager = new DangerObjectManager(config.visibilityRadius);
+const directionManager = new DirectionManager(config.minDangerDistance, dangerObjectManager);
 const keyPressStateFactory = new KeysPressStateFactory();
 
 for (const botName of botNames) {
