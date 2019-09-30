@@ -29,7 +29,9 @@ class Bot {
   }
 
   public getVisiblePlayers(): GameObject[] {
-    return this.filterVisibleObjects(this.storage.worldData.playersData);
+    return this.filterVisibleObjects(this.storage.worldData.playersData)
+      .filter((v) => v.id !== this.getPlayerData().id)
+    ;
   }
 
   public getPlayerData(): GameObject {

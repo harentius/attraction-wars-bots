@@ -22,16 +22,6 @@ class KeysPressState {
 
     return true;
   }
-
-  public toJSON() {
-    return {
-      up: this.up,
-      down: this.down,
-      left: this.left,
-      right: this.right,
-      space: this.space,
-    };
-  }
 }
 
 export default KeysPressState;
