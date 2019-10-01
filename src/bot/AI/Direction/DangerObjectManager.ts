@@ -40,10 +40,10 @@ class DangerObjectManager {
     asteroidsInfluenceMultiplier: number,
   ): GameObject {
     const dangerPlayer = visiblePlayers
-      .find((p) => p.r > playerData.r)
+      .find((p) => p.r >= playerData.r)
     ;
     const dangerAsteroid = visibleAsteroids
-      .find((a) => a.r > playerData.r)
+      .find((a) => a.r >= playerData.r)
     ;
 
     if (dangerPlayer && dangerAsteroid) {
