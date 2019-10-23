@@ -28,6 +28,10 @@ class BotAI {
     this.bot.login();
   }
 
+  public uid() {
+    return this.bot.uid();
+  }
+
   public tick(): void {
     const playerData = this.bot.getPlayerData();
     const visiblePlayers = this.bot.getVisiblePlayers();

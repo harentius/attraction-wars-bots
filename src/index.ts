@@ -34,6 +34,11 @@ for (const botName of botNames) {
     config.ticksBeforeChangeDirection,
   );
   botAIs.push(botAI);
+
+  storage.on(Storage.DISCONNECT, () => {
+    const botIndex = botAIs.findIndex((v) => botAI.uid() === v.uid());
+    botAIs.splice(botIndex, 1);
+  });
 }
 
 setInterval(() => {
