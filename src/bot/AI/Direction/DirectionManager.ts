@@ -4,6 +4,7 @@ import Direction from './Direction';
 import DangerObjectManager from './DangerObjectManager';
 import isCirclesIntersect from '../../../math-utils/isCirclesIntersect';
 import getAngle from '../../../math-utils/getAngle';
+import random from '../../../utils/random';
 
 class DirectionManager {
   private readonly dangerObjectManager: DangerObjectManager;
@@ -41,7 +42,8 @@ class DirectionManager {
       return direction;
     }
 
-    const angle = (Math.atan2(dangerObject.y - playerData.y, dangerObject.x - playerData.x) + Math.PI) % (2 * Math.PI);
+    const shift = Math.PI + random(-Math.PI / 2, Math.PI / 2);
+    const angle = (Math.atan2(dangerObject.y - playerData.y, dangerObject.x - playerData.x) + shift) % (2 * Math.PI);
 
     return new Direction(angle);
   }
