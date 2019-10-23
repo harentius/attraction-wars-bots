@@ -1,35 +1,10 @@
 import GameObject from '../../../storage/GameObject';
-import Direction from './Direction';
-import buildDirectionalLines from './buildDirectionalLines';
-import isCircleAndLineIntersect from '../../../math-utils/isCircleAndLineIntersect';
 
 class DangerObjectManager {
-  private readonly visibilityRadius: number;
+  private readonly minDistanceToDangerObject: number;
 
-  public constructor(visibilityRadius: number) {
-    this.visibilityRadius = visibilityRadius;
-  }
-
-  public selectMostOptimalDirection(
-    playerData: GameObject,
-    targetAngle: number,
-    dangerObject: GameObject,
-  ): Direction {
-    const movementDirections = [];
-
-    for (const direction of Direction.getPossibleDirections()) {
-      const lines = buildDirectionalLines(playerData, direction, this.visibilityRadius);
-
-      if (!isCircleAndLineIntersect(dangerObject, lines[0]) && !isCircleAndLineIntersect(dangerObject, lines[1])) {
-        movementDirections.push(direction);
-      }
-    }
-
-    const sortedDirections = movementDirections
-      .sort((v1, v2) => Math.abs(v1 - targetAngle) > Math.abs(v2 - targetAngle) ? 1 : -1)
-    ;
-
-    return new Direction(sortedDirections[0]);
+  public constructor(minDistanceToDangerObject: number) {
+    this.minDistanceToDangerObject = minDistanceToDangerObject;
   }
 
   public getDangerObject(
@@ -53,11 +28,11 @@ class DangerObjectManager {
     }
 
     if (dangerAsteroid) {
-      return {...dangerAsteroid, r: dangerAsteroid.r * asteroidsInfluenceMultiplier};
+      return {...dangerAsteroid, r: dangerAsteroid.r * asteroidsInfluenceMultiplier + this.minDistanceToDangerObject};
     }
 
     if (dangerPlayer) {
-      return {...dangerPlayer, r: dangerPlayer.r * playersInfluenceMultiplier};
+      return {...dangerPlayer, r: dangerPlayer.r * playersInfluenceMultiplier + this.minDistanceToDangerObject};
     }
 
     return null;

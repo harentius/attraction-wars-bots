@@ -1,17 +1,20 @@
 import GameObject from '../../../storage/GameObject';
 import Target from '../Target/Target';
 import Direction from './Direction';
-import calculateAngleToXAxis from '../../../math-utils/calculateAngleToXAxis';
-import calculateCirclesDistance from '../../../math-utils/calculateCirclesDistance';
 import DangerObjectManager from './DangerObjectManager';
+import isCirclesIntersect from '../../../math-utils/isCirclesIntersect';
+import getAngle from '../../../math-utils/getAngle';
 
 class DirectionManager {
-  private readonly minDangerDistance: number;
   private readonly dangerObjectManager: DangerObjectManager;
+  private readonly visibilityRadius: number;
 
-  public constructor(minDangerDistance: number, dangerObjectManager: DangerObjectManager) {
+  public constructor(
+    visibilityRadius: number,
+    dangerObjectManager: DangerObjectManager,
+  ) {
+    this.visibilityRadius = visibilityRadius;
     this.dangerObjectManager = dangerObjectManager;
-    this.minDangerDistance = minDangerDistance;
   }
 
   public selectDirection(
@@ -22,7 +25,8 @@ class DirectionManager {
     playersInfluenceMultiplier: number,
     asteroidsInfluenceMultiplier: number,
   ): Direction {
-    const targetAngle = calculateAngleToXAxis(playerData, target.gameObject);
+    const targetAngle = getAngle(playerData, target.gameObject);
+
     const dangerObject = this.dangerObjectManager.getDangerObject(
       playerData,
       visiblePlayers,
@@ -31,11 +35,15 @@ class DirectionManager {
       asteroidsInfluenceMultiplier,
     );
 
-    if (!dangerObject || calculateCirclesDistance(playerData, dangerObject) > this.minDangerDistance) {
-      return new Direction(targetAngle);
+    const direction = new Direction(targetAngle);
+
+    if (!dangerObject || !isCirclesIntersect(playerData, dangerObject) ) {
+      return direction;
     }
 
-    return this.dangerObjectManager.selectMostOptimalDirection(playerData, targetAngle, dangerObject);
+    const angle = (Math.atan2(dangerObject.y - playerData.y, dangerObject.x - playerData.x) + Math.PI) % (2 * Math.PI);
+
+    return new Direction(angle);
   }
 }
 

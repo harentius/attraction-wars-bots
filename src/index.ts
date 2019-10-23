@@ -18,8 +18,8 @@ for (let i = 0; i < n; i++) {
 const botAIs: BotAI[] = [];
 
 const targetManager = new TargetManager();
-const dangerObjectManager = new DangerObjectManager(config.visibilityRadius);
-const directionManager = new DirectionManager(config.minDangerDistance, dangerObjectManager);
+const dangerObjectManager = new DangerObjectManager(config.minDistanceToDangerObject);
+const directionManager = new DirectionManager(config.visibilityRadius, dangerObjectManager);
 const keyPressStateFactory = new KeysPressStateFactory();
 
 for (const botName of botNames) {

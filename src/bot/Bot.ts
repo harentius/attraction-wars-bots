@@ -10,7 +10,7 @@ class Bot {
   private readonly client: Client;
   private readonly storage: Storage;
   private keyPressState: KeysPressState;
-  private visibilityRadius: number;
+  private readonly visibilityRadius: number;
 
   constructor(name: string, client: Client, storage: Storage, visibilityRadius: number) {
     this.name = name;

@@ -1,8 +1,9 @@
 import each from 'jest-each';
 import DangerObjectManager from '../../../../src/bot/AI/Direction/DangerObjectManager';
 import GameObject from '../../../../src/storage/GameObject';
+import Direction from '../../../../src/bot/AI/Direction/Direction';
 
-const dangerObjectManager = new DangerObjectManager(400);
+const dangerObjectManager = new DangerObjectManager(0);
 
 each([
   [{ x: 0, y: 0, r: 50, id: 1}, [], [], null],
