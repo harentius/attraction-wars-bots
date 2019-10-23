@@ -26,7 +26,13 @@ for (const botName of botNames) {
   const storage = new Storage();
   const client = new Client(storage, serverUrl);
   const bot = new Bot(botName, client, storage, config.visibilityRadius);
-  const botAI = new BotAI(bot, targetManager, directionManager, keyPressStateFactory);
+  const botAI = new BotAI(
+    bot,
+    targetManager,
+    directionManager,
+    keyPressStateFactory,
+    config.ticksBeforeChangeDirection,
+  );
   botAIs.push(botAI);
 }
 

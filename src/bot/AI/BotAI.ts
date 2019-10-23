@@ -11,17 +11,20 @@ class BotAI {
   private directionManager: DirectionManager;
   private target: Target | null;
   private keysPressStateFactory: KeysPressStateFactory;
+  private readonly ticksBeforeChangeDirection: number;
 
   constructor(
     bot: Bot,
     targetManager: TargetManager,
     directionManager: DirectionManager,
     keysPressStateFactory: KeysPressStateFactory,
+    ticksBeforeChangeDirection: number,
   ) {
     this.bot = bot;
     this.targetManager = targetManager;
     this.directionManager = directionManager;
     this.keysPressStateFactory = keysPressStateFactory;
+    this.ticksBeforeChangeDirection = ticksBeforeChangeDirection;
     this.bot.login();
   }
 
@@ -34,10 +37,24 @@ class BotAI {
       this.target = null;
     }
 
-    if (!this.target || this.target.type === Target.TARGET_POINT) {
-      this.target = this.targetManager.selectTarget(playerData, visiblePlayers, visibleAsteroids);
+    if (!this.target || (this.target.type === Target.TARGET_POINT)) {
+      const target = this.targetManager.selectTarget(
+        playerData,
+        visiblePlayers,
+        visibleAsteroids,
+        this.bot.getWorldData().worldBounds[2],
+        this.bot.getWorldData().worldBounds[3],
+      );
+
+      if (!this.target
+        || target.type !== Target.TARGET_POINT
+        || (this.target.ticksMoved > this.ticksBeforeChangeDirection)
+      ) {
+        this.target = target;
+      }
     }
 
+    this.target.increaseTickMoved();
     const worldData = this.bot.getWorldData();
     const direction = this.directionManager.selectDirection(
       playerData,

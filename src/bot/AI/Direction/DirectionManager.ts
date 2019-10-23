@@ -42,7 +42,7 @@ class DirectionManager {
       return direction;
     }
 
-    const shift = Math.PI + random(-Math.PI / 2, Math.PI / 2);
+    const shift = Math.PI + random(-0.10, 0.10);
     const angle = (Math.atan2(dangerObject.y - playerData.y, dangerObject.x - playerData.x) + shift) % (2 * Math.PI);
 
     return new Direction(angle);

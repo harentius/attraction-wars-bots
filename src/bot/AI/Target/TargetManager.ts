@@ -1,8 +1,15 @@
 import GameObject from '../../../storage/GameObject';
 import Target from './Target';
+import randomInt from '../../../utils/randomInt';
 
 class TargetManager {
-  public selectTarget(playerData: GameObject, visiblePlayers: GameObject[], visibleAsteroids: GameObject[]): Target {
+  public selectTarget(
+    playerData: GameObject,
+    visiblePlayers: GameObject[],
+    visibleAsteroids: GameObject[],
+    worldWidth: number = 0,
+    worldHeight: number = 0,
+  ): Target {
     const playerR = playerData.r;
     const smallerFilter = (v) => v.r < playerR;
 
@@ -10,7 +17,7 @@ class TargetManager {
     const closestAbsorbableAsteroid = visibleAsteroids.find(smallerFilter);
 
     if (!closestAbsorbablePlayer && !closestAbsorbableAsteroid) {
-      return new Target(Target.TARGET_POINT, {id: 0, x: 0, y: 0, r: 0});
+      return new Target(Target.TARGET_POINT, {id: 0, x: randomInt(0, worldWidth), y: randomInt(0, worldHeight), r: 0});
     }
 
     if (closestAbsorbablePlayer) {
@@ -25,6 +32,10 @@ class TargetManager {
     visiblePlayers: GameObject[],
     visibleAsteroids: GameObject[],
   ): boolean {
+    if (target.type === Target.TARGET_POINT) {
+      return true;
+    }
+
     let collectionToSearch = null;
 
     if (target.type === Target.TARGET_PLAYER) {
