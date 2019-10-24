@@ -16,6 +16,7 @@
   "dependencies": {
     "@types/socket.io": "^2.1.2",
     "attraction-wars-client-storage": "git+https://github.com/harentius/attraction-wars-client-storage.git",
+    "faker": "^4.1.0",
     "intersects": "^2.7.1"
   },
   "devDependencies": {

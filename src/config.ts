@@ -6,12 +6,16 @@ const config: {
   tickInterval: number,
   minDistanceToDangerObject: number,
   ticksBeforeChangeDirection: number,
+  minPlayers: number,
+  maxPlayers: number,
 } = {
   serverUrl,
   visibilityRadius: 400,
   tickInterval: 15,
   minDistanceToDangerObject: 15,
   ticksBeforeChangeDirection: 500,
+  minPlayers: 5,
+  maxPlayers: 30,
 };
 
 export default config;
