@@ -1,0 +1,48 @@
+version: 2
+jobs:
+  lint:
+    working_directory: ~/attraction-wars-bots
+    docker:
+      - image: circleci/node:10.0.0
+    steps:
+      - checkout
+      - run:
+          name: install-npm
+          command: 'sudo npm install -g npm@latest'
+      - restore_cache: # special step to restore the dependency cache
+          key: dependency-cache-{{ checksum "package.json" }}
+      - run:
+          name: install-dependencies
+          command: npm install
+      - save_cache: # special step to save the dependency cache
+          key: dependency-cache-{{ checksum "package.json" }}
+          paths:
+            - ./node_modules
+      - run:
+          name: lint
+          command: npm run lint
+
+  build-and-publish-image:
+    docker:
+      - image: circleci/buildpack-deps:stretch
+    steps:
+      - checkout
+      - setup_remote_docker
+      - run:
+          name: Build Docker image
+          command: |
+            docker build -t "$IMAGE_NAME":latest .
+            echo "$DOCKERHUB_PASS" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
+            docker push "$IMAGE_NAME":latest
+    filters:
+      branches:
+        only: master
+    requires:
+      - lint
+
+workflows:
+  version: 2
+  lint_and_publish:
+    jobs:
+      - lint
+      - build-and-publish-image
