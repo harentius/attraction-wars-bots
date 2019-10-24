@@ -32,6 +32,10 @@ class BotAI {
     return this.bot.uid();
   }
 
+  public isTooBig(): boolean {
+    return this.bot.getPlayerData().r > this.bot.getWorldData().worldBounds[2] / 10;
+  }
+
   public tick(): void {
     const playerData = this.bot.getPlayerData();
     const visiblePlayers = this.bot.getVisiblePlayers();

@@ -21,6 +21,7 @@ const botAIFactory = new BotAIFactory(
 const botAIManager = new BotAIManager(
   botAIFactory,
   config.tickInterval,
+  config.botManagerInterval,
   config.minPlayers,
   config.maxPlayers,
 );
