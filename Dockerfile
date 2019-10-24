@@ -1,5 +1,6 @@
 FROM node:12.8-alpine AS build
 
+RUN apk add git
 WORKDIR /app
 COPY package.json package-lock.json ./
 RUN npm install
