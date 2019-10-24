@@ -8,6 +8,7 @@ COPY ./ ./
 RUN npm run build
 
 FROM node:12.8-alpine
+RUN apk add git
 WORKDIR /app
 COPY package.json package-lock.json ./
 RUN npm install --production
