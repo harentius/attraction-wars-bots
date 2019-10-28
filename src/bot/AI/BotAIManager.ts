@@ -39,9 +39,14 @@ class BotAIManager {
   }
 
   private update(): void {
-    if (this.botAIs.length > this.maxPlayers) {
+    const onlineCount = this.botAIs.length > 0
+      ? this.botAIs[0].getWorldData().serverStatistics.onlineCount
+      : 0
+    ;
+
+    if (onlineCount > this.maxPlayers) {
       this.deleteRandomBotAI();
-    } else if ((this.botAIs.length < this.minPlayers) || Math.random() > 0.1) {
+    } else if ((onlineCount < this.minPlayers) || Math.random() > 0.1) {
       this.addBotAI();
     }
 

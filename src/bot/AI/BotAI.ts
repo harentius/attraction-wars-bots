@@ -35,6 +35,10 @@ class BotAI {
     return this.bot.uid();
   }
 
+  public getWorldData(): any {
+    return this.bot.getWorldData();
+  }
+
   public isTooBig(): boolean {
     return this.bot.getPlayerData().r > this.bot.getWorldData().worldBounds[2] * this.tooBigMultiplier;
   }
