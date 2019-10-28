@@ -20,7 +20,11 @@ class Bot {
     this.keyPressState = new KeysPressState();
   }
 
-  public uid(): string {
+  public uid(): string|null {
+    if (this.client.socket) {
+      return null;
+    }
+
     return this.client.socket.id;
   }
 

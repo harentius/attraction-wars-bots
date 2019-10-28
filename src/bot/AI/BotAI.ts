@@ -31,7 +31,7 @@ class BotAI {
     this.bot.login();
   }
 
-  public uid() {
+  public uid(): string|null {
     return this.bot.uid();
   }
 

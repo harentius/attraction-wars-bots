@@ -67,6 +67,10 @@ class BotAIManager {
   }
 
   private deleteBotAi(botAI): void {
+    if (!botAI.uid()) {
+      return;
+    }
+
     const botIndex = this.botAIs.findIndex((v) => botAI.uid() === v.uid());
     this.botAIs.splice(botIndex, 1);
   }
