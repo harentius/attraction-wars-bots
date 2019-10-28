@@ -8,7 +8,7 @@ class BotAIManager {
   private readonly botManagerInterval: number;
   private readonly minPlayers: number;
   private readonly maxPlayers: number;
-  private botAIs: BotAI[];
+  private readonly botAIs: BotAI[];
 
   constructor(
     botAIFactory: BotAIFactory,

@@ -12,6 +12,7 @@ class BotAI {
   private target: Target | null;
   private keysPressStateFactory: KeysPressStateFactory;
   private readonly ticksBeforeChangeDirection: number;
+  private readonly tooBigMultiplier: number;
 
   constructor(
     bot: Bot,
@@ -19,12 +20,14 @@ class BotAI {
     directionManager: DirectionManager,
     keysPressStateFactory: KeysPressStateFactory,
     ticksBeforeChangeDirection: number,
+    tooBigMultiplier: number,
   ) {
     this.bot = bot;
     this.targetManager = targetManager;
     this.directionManager = directionManager;
     this.keysPressStateFactory = keysPressStateFactory;
     this.ticksBeforeChangeDirection = ticksBeforeChangeDirection;
+    this.tooBigMultiplier = tooBigMultiplier;
     this.bot.login();
   }
 
@@ -33,7 +36,7 @@ class BotAI {
   }
 
   public isTooBig(): boolean {
-    return this.bot.getPlayerData().r > this.bot.getWorldData().worldBounds[2] / 10;
+    return this.bot.getPlayerData().r > this.bot.getWorldData().worldBounds[2] * this.tooBigMultiplier;
   }
 
   public tick(): void {

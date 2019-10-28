@@ -17,6 +17,7 @@ const botAIFactory = new BotAIFactory(
   config.serverUrl,
   config.visibilityRadius,
   config.ticksBeforeChangeDirection,
+  config.tooBigMultiplier,
 );
 const botAIManager = new BotAIManager(
   botAIFactory,

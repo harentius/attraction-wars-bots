@@ -13,6 +13,7 @@ class BotAIFactory {
   private readonly serverUrl: string;
   private readonly visibilityRadius: number;
   private readonly ticksBeforeChangeDirection: number;
+  private readonly tooBigMultiplier: number;
 
   constructor(
     targetManager: TargetManager,
@@ -21,6 +22,7 @@ class BotAIFactory {
     serverUrl: string,
     visibilityRadius: number,
     ticksBeforeChangeDirection: number,
+    tooBigMultiplier: number,
   ) {
     this.targetManager = targetManager;
     this.directionManager = directionManager;
@@ -28,6 +30,7 @@ class BotAIFactory {
     this.serverUrl = serverUrl;
     this.visibilityRadius = visibilityRadius;
     this.ticksBeforeChangeDirection = ticksBeforeChangeDirection;
+    this.tooBigMultiplier = tooBigMultiplier;
   }
 
   public create(onDisconnect: () => void): BotAI {
@@ -41,6 +44,7 @@ class BotAIFactory {
       this.directionManager,
       this.keyPressStateFactory,
       this.ticksBeforeChangeDirection,
+      this.tooBigMultiplier,
     );
   }
 

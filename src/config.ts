@@ -9,6 +9,8 @@ const config: {
   ticksBeforeChangeDirection: number,
   minPlayers: number,
   maxPlayers: number,
+  // Max relative to world width size
+  tooBigMultiplier: number,
 } = {
   serverUrl,
   visibilityRadius: 400,
@@ -18,6 +20,7 @@ const config: {
   ticksBeforeChangeDirection: 500,
   minPlayers: 5,
   maxPlayers: 30,
+  tooBigMultiplier: 1.0 / 30.0,
 };
 
 export default config;
