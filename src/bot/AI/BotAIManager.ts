@@ -41,7 +41,7 @@ class BotAIManager {
   private update(): void {
     if (this.botAIs.length > this.maxPlayers) {
       this.deleteRandomBotAI();
-    } else if ((this.botAIs.length < this.minPlayers) || Math.random() > 0.9) {
+    } else if ((this.botAIs.length < this.minPlayers) || Math.random() > 0.1) {
       this.addBotAI();
     }
 
