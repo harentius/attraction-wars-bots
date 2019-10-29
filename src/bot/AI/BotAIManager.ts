@@ -39,10 +39,7 @@ class BotAIManager {
   }
 
   private update(): void {
-    const onlineCount = this.botAIs.length > 0
-      ? this.botAIs[0].getWorldData().serverStatistics.onlineCount
-      : 0
-    ;
+    const onlineCount = this.getOnlineCount();
 
     if (onlineCount > this.maxPlayers) {
       this.deleteRandomBotAI();
@@ -64,6 +61,13 @@ class BotAIManager {
     for (let i = 0; i < n; i++) {
       this.addBotAI();
     }
+  }
+
+  private getOnlineCount(): number {
+    return this.botAIs.length > 0
+      ? this.botAIs[0].getWorldData().serverStatistics.onlineCount
+      : 0
+    ;
   }
 
   private addBotAI(): void {

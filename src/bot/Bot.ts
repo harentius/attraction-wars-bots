@@ -29,6 +29,10 @@ class Bot {
   }
 
   public login(): void {
+    if (this.client.socket) {
+      return;
+    }
+
     this.client.login(this.name);
   }
 
@@ -51,6 +55,10 @@ class Bot {
   }
 
   public setKeyPressState(keyPressState: KeysPressState): void {
+    if (this.client.socket) {
+      return;
+    }
+
     if (!this.keyPressState.isEqual(keyPressState)) {
       this.keyPressState = keyPressState;
       this.client.sendKeysPressState(keyPressState);
