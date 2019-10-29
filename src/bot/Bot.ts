@@ -21,7 +21,7 @@ class Bot {
   }
 
   public uid(): string|null {
-    if (this.client.socket) {
+    if (!this.client.socket) {
       return null;
     }
 
@@ -29,7 +29,7 @@ class Bot {
   }
 
   public login(): void {
-    if (this.client.socket) {
+    if (!this.client.socket) {
       return;
     }
 
@@ -55,7 +55,7 @@ class Bot {
   }
 
   public setKeyPressState(keyPressState: KeysPressState): void {
-    if (this.client.socket) {
+    if (!this.client.socket) {
       return;
     }
 
