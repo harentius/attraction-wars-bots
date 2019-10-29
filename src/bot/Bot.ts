@@ -29,10 +29,6 @@ class Bot {
   }
 
   public login(): void {
-    if (!this.client.socket) {
-      return;
-    }
-
     this.client.login(this.name);
   }
 
