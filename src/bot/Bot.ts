@@ -20,16 +20,12 @@ class Bot {
     this.keyPressState = new KeysPressState();
   }
 
-  public uid(): string|null {
-    if (!this.client.socket) {
-      return null;
-    }
-
-    return this.client.socket.id;
-  }
-
   public login(): void {
     this.client.login(this.name);
+  }
+
+  public logout(): void {
+    this.client.logout();
   }
 
   public getVisibleAsteroids(): GameObject[] {
@@ -51,7 +47,7 @@ class Bot {
   }
 
   public setKeyPressState(keyPressState: KeysPressState): void {
-    if (!this.client.socket) {
+    if (!this.client.isConnected()) {
       return;
     }
 

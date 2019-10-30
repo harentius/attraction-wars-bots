@@ -41,15 +41,15 @@ class BotAIManager {
   private update(): void {
     const onlineCount = this.getOnlineCount();
 
-    if (onlineCount > this.maxPlayers) {
-      this.deleteRandomBotAI();
+    if (onlineCount >= this.maxPlayers) {
+      this.logoutRandomBot();
     } else if ((onlineCount < this.minPlayers) || Math.random() > 0.1) {
       this.addBotAI();
     }
 
     for (const botAI of this.botAIs) {
       if (botAI.isTooBig()) {
-        this.deleteBotAi(botAI);
+        botAI.logout();
         return;
       }
     }
@@ -75,18 +75,14 @@ class BotAIManager {
     this.botAIs.push(botAI);
   }
 
-  private deleteBotAi(botAI): void {
-    if (!botAI.uid()) {
-      return;
-    }
-
-    const botIndex = this.botAIs.findIndex((v) => botAI.uid() === v.uid());
+  private deleteBotAi(botAI: BotAI): void {
+    const botIndex = this.botAIs.findIndex((v) => botAI.id === v.id);
     this.botAIs.splice(botIndex, 1);
   }
 
-  private deleteRandomBotAI(): void {
+  private logoutRandomBot(): void {
     const index = randomInt(0, this.botAIs.length - 1);
-    this.deleteBotAi(this.botAIs[index]);
+    this.botAIs[index].logout();
   }
 }
 

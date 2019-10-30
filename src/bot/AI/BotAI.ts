@@ -4,8 +4,10 @@ import TargetManager from './Target/TargetManager';
 import DirectionManager from './Direction/DirectionManager';
 import Direction from './Direction/Direction';
 import KeysPressStateFactory from './KeysPressStateFactory';
+import genId from '../../utils/genId';
 
 class BotAI {
+  public readonly id;
   private readonly bot: Bot;
   private readonly targetManager: TargetManager;
   private directionManager: DirectionManager;
@@ -28,11 +30,12 @@ class BotAI {
     this.keysPressStateFactory = keysPressStateFactory;
     this.ticksBeforeChangeDirection = ticksBeforeChangeDirection;
     this.tooBigMultiplier = tooBigMultiplier;
+    this.id = genId();
     this.bot.login();
   }
 
-  public uid(): string|null {
-    return this.bot.uid();
+  public logout(): void {
+    this.bot.logout();
   }
 
   public getWorldData(): any {
@@ -40,6 +43,10 @@ class BotAI {
   }
 
   public isTooBig(): boolean {
+    if (!this.bot.getPlayerData().r || !this.bot.getWorldData().worldBounds[2]) {
+      return false;
+    }
+
     return this.bot.getPlayerData().r > this.bot.getWorldData().worldBounds[2] * this.tooBigMultiplier;
   }
 
