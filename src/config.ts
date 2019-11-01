@@ -14,7 +14,7 @@ const config: {
 } = {
   serverUrl,
   visibilityRadius: 400,
-  tickInterval: 15,
+  tickInterval: 700,
   botManagerInterval: 5000,
   minDistanceToDangerObject: 15,
   ticksBeforeChangeDirection: 500,
