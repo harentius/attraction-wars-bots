@@ -25,7 +25,19 @@ class Bot {
   }
 
   public logout(): void {
+    if (!this.client || !this.client.isConnected()) {
+      return;
+    }
+
     this.client.logout();
+    this.clean();
+  }
+
+  public clean(): void {
+    if (!this.client || !this.client.isConnected()) {
+      return;
+    }
+
     this.client.storage = null;
     this.storage = null;
     this.client.socket = null;

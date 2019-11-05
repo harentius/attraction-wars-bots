@@ -71,8 +71,14 @@ class BotAIManager {
   }
 
   private addBotAI(): void {
-    const botAI = this.botAIFactory.create();
+    const botAI = this.botAIFactory.create(() => this.deleteBotAi(botAI));
     this.botAIs.push(botAI);
+  }
+
+  private deleteBotAi(botAI: BotAI): void {
+    botAI.clean();
+    const botIndex = this.botAIs.findIndex((v) => botAI.id === v.id);
+    this.botAIs.splice(botIndex, 1);
   }
 
   private logoutRandomBot(): void {

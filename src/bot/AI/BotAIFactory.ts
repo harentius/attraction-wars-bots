@@ -33,8 +33,9 @@ class BotAIFactory {
     this.tooBigMultiplier = tooBigMultiplier;
   }
 
-  public create(): BotAI {
+  public create(onDisconnect: () => void): BotAI {
     const storage = new Storage();
+    storage.on(Storage.DISCONNECT, onDisconnect);
     const client = new Client(storage, this.serverUrl);
     const bot = new Bot(this.generateUsername(), client, storage, this.visibilityRadius);
     return new BotAI(

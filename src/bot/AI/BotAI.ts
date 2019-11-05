@@ -38,6 +38,10 @@ class BotAI {
     this.bot.logout();
   }
 
+  public clean(): void {
+    this.bot.clean();
+  }
+
   public getWorldData(): any {
     return this.bot.getWorldData();
   }
