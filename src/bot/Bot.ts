@@ -7,8 +7,8 @@ import Circle from '../math-utils/types/Circle';
 
 class Bot {
   private readonly name: string;
-  private readonly client: Client;
-  private readonly storage: Storage;
+  private client: Client;
+  private storage: Storage;
   private keyPressState: KeysPressState;
   private readonly visibilityRadius: number;
 
@@ -26,6 +26,10 @@ class Bot {
 
   public logout(): void {
     this.client.logout();
+    this.client.storage = null;
+    this.storage = null;
+    this.client.socket = null;
+    this.client = null;
   }
 
   public getVisibleAsteroids(): GameObject[] {
