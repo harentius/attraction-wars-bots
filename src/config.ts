@@ -11,6 +11,7 @@ const config: {
   maxPlayers: number,
   // Max relative to world width size
   tooBigMultiplier: number,
+  borderMargin: number,
 } = {
   serverUrl,
   visibilityRadius: 400,
@@ -21,6 +22,7 @@ const config: {
   minPlayers: 5,
   maxPlayers: 20,
   tooBigMultiplier: 1.0 / 30.0,
+  borderMargin: 100,
 };
 
 export default config;

@@ -1,7 +1,7 @@
 import TargetManager from '../../../../src/bot/AI/Target/TargetManager';
 import Target from '../../../../src/bot/AI/Target/Target';
 
-const targetManager = new TargetManager();
+const targetManager = new TargetManager(100);
 
 const asteroids = [
   {id: 2, x: 100, y: 0, r: 60}, // closest, but bigger then player

@@ -3,6 +3,12 @@ import Target from './Target';
 import randomInt from '../../../utils/randomInt';
 
 class TargetManager {
+  private readonly borderMargin: number;
+
+  public constructor(borderMargin: number) {
+    this.borderMargin = borderMargin;
+  }
+
   public selectTarget(
     playerData: GameObject,
     visiblePlayers: GameObject[],
@@ -10,6 +16,42 @@ class TargetManager {
     worldWidth: number = 0,
     worldHeight: number = 0,
   ): Target {
+    if (playerData.x <= this.borderMargin) {
+      return new Target(Target.TARGET_POINT, {
+        id: 0,
+        x: worldWidth - this.borderMargin,
+        y: playerData.y,
+        r: 0,
+      });
+    }
+
+    if (playerData.x >= (worldWidth - this.borderMargin)) {
+      return new Target(Target.TARGET_POINT, {
+        id: 0,
+        x: this.borderMargin,
+        y: playerData.y,
+        r: 0,
+      });
+    }
+
+    if (playerData.y <= this.borderMargin) {
+      return new Target(Target.TARGET_POINT, {
+        id: 0,
+        x: playerData.x,
+        y: worldHeight - this.borderMargin,
+        r: 0,
+      });
+    }
+
+    if (playerData.y >= (worldHeight - this.borderMargin)) {
+      return new Target(Target.TARGET_POINT, {
+        id: 0,
+        x: playerData.x,
+        y: this.borderMargin,
+        r: 0,
+      });
+    }
+
     const playerR = playerData.r;
     const smallerFilter = (v) => v.r < playerR;
 
@@ -17,7 +59,12 @@ class TargetManager {
     const closestAbsorbableAsteroid = visibleAsteroids.find(smallerFilter);
 
     if (!closestAbsorbablePlayer && !closestAbsorbableAsteroid) {
-      return new Target(Target.TARGET_POINT, {id: 0, x: randomInt(0, worldWidth), y: randomInt(0, worldHeight), r: 0});
+      return new Target(Target.TARGET_POINT, {
+        id: 0,
+        x: randomInt(this.borderMargin, worldWidth),
+        y: randomInt(this.borderMargin, worldHeight),
+        r: 0,
+      });
     }
 
     if (closestAbsorbablePlayer) {
