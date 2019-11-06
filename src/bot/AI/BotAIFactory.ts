@@ -14,6 +14,7 @@ class BotAIFactory {
   private readonly visibilityRadius: number;
   private readonly ticksBeforeChangeDirection: number;
   private readonly tooBigMultiplier: number;
+  private borderMarginRadiusMultiplier: number;
 
   constructor(
     targetManager: TargetManager,
@@ -23,6 +24,7 @@ class BotAIFactory {
     visibilityRadius: number,
     ticksBeforeChangeDirection: number,
     tooBigMultiplier: number,
+    borderMarginRadiusMultiplier: number,
   ) {
     this.targetManager = targetManager;
     this.directionManager = directionManager;
@@ -31,6 +33,7 @@ class BotAIFactory {
     this.visibilityRadius = visibilityRadius;
     this.ticksBeforeChangeDirection = ticksBeforeChangeDirection;
     this.tooBigMultiplier = tooBigMultiplier;
+    this.borderMarginRadiusMultiplier = borderMarginRadiusMultiplier;
   }
 
   public create(onDisconnect: () => void): BotAI {
@@ -45,6 +48,7 @@ class BotAIFactory {
       this.keyPressStateFactory,
       this.ticksBeforeChangeDirection,
       this.tooBigMultiplier,
+      this.borderMarginRadiusMultiplier
     );
   }
 

@@ -15,6 +15,7 @@ class BotAI {
   private keysPressStateFactory: KeysPressStateFactory;
   private readonly ticksBeforeChangeDirection: number;
   private readonly tooBigMultiplier: number;
+  private readonly borderMarginRadiusMultiplier: number;
 
   constructor(
     bot: Bot,
@@ -23,6 +24,7 @@ class BotAI {
     keysPressStateFactory: KeysPressStateFactory,
     ticksBeforeChangeDirection: number,
     tooBigMultiplier: number,
+    borderMarginRadiusMultiplier: number,
   ) {
     this.bot = bot;
     this.targetManager = targetManager;
@@ -30,6 +32,7 @@ class BotAI {
     this.keysPressStateFactory = keysPressStateFactory;
     this.ticksBeforeChangeDirection = ticksBeforeChangeDirection;
     this.tooBigMultiplier = tooBigMultiplier;
+    this.borderMarginRadiusMultiplier = borderMarginRadiusMultiplier;
     this.id = genId();
     this.bot.login();
   }
@@ -63,7 +66,14 @@ class BotAI {
       this.target = null;
     }
 
-    if (!this.target || (this.target.type === Target.TARGET_POINT)) {
+    if (
+      !this.target
+      || (this.target.type === Target.TARGET_POINT)
+      || playerData.x <= playerData.r * this.borderMarginRadiusMultiplier
+      || playerData.x >= this.bot.getWorldData().worldBounds[2] - playerData.r * this.borderMarginRadiusMultiplier
+      || playerData.y <= playerData.r * this.borderMarginRadiusMultiplier
+      || playerData.y >= this.bot.getWorldData().worldBounds[3] - playerData.r * this.borderMarginRadiusMultiplier
+    ) {
       const target = this.targetManager.selectTarget(
         playerData,
         visiblePlayers,

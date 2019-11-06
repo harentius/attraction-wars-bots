@@ -18,6 +18,7 @@ const botAIFactory = new BotAIFactory(
   config.visibilityRadius,
   config.ticksBeforeChangeDirection,
   config.tooBigMultiplier,
+  config.borderMarginRadiusMultiplier,
 );
 const botAIManager = new BotAIManager(
   botAIFactory,
