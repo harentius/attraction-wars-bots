@@ -6,7 +6,7 @@ import DangerObjectManager from './bot/AI/Direction/DangerObjectManager';
 import BotAIFactory from './bot/AI/BotAIFactory';
 import BotAIManager from './bot/AI/BotAIManager';
 
-const targetManager = new TargetManager(config.borderMargin);
+const targetManager = new TargetManager(config.borderMarginRadiusMultiplier);
 const dangerObjectManager = new DangerObjectManager(config.minDistanceToDangerObject);
 const directionManager = new DirectionManager(config.visibilityRadius, dangerObjectManager);
 const keyPressStateFactory = new KeysPressStateFactory();

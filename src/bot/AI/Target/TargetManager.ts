@@ -3,10 +3,10 @@ import Target from './Target';
 import randomInt from '../../../utils/randomInt';
 
 class TargetManager {
-  private readonly borderMargin: number;
+  private readonly borderMarginRadiusMultiplier: number;
 
   public constructor(borderMargin: number) {
-    this.borderMargin = borderMargin;
+    this.borderMarginRadiusMultiplier = borderMargin;
   }
 
   public selectTarget(
@@ -16,38 +16,38 @@ class TargetManager {
     worldWidth: number = 0,
     worldHeight: number = 0,
   ): Target {
-    if (playerData.x <= this.borderMargin) {
+    if (playerData.x <= playerData.r * this.borderMarginRadiusMultiplier) {
       return new Target(Target.TARGET_POINT, {
         id: 0,
-        x: worldWidth - this.borderMargin,
+        x: worldWidth - playerData.r * this.borderMarginRadiusMultiplier,
         y: playerData.y,
         r: 0,
       });
     }
 
-    if (playerData.x >= (worldWidth - this.borderMargin)) {
+    if (playerData.x >= (worldWidth - playerData.r * this.borderMarginRadiusMultiplier)) {
       return new Target(Target.TARGET_POINT, {
         id: 0,
-        x: this.borderMargin,
+        x: playerData.r * this.borderMarginRadiusMultiplier,
         y: playerData.y,
         r: 0,
       });
     }
 
-    if (playerData.y <= this.borderMargin) {
+    if (playerData.y <= playerData.r * this.borderMarginRadiusMultiplier) {
       return new Target(Target.TARGET_POINT, {
         id: 0,
         x: playerData.x,
-        y: worldHeight - this.borderMargin,
+        y: worldHeight - playerData.r * this.borderMarginRadiusMultiplier,
         r: 0,
       });
     }
 
-    if (playerData.y >= (worldHeight - this.borderMargin)) {
+    if (playerData.y >= (worldHeight - playerData.r * this.borderMarginRadiusMultiplier)) {
       return new Target(Target.TARGET_POINT, {
         id: 0,
         x: playerData.x,
-        y: this.borderMargin,
+        y: playerData.r * this.borderMarginRadiusMultiplier,
         r: 0,
       });
     }
@@ -61,8 +61,8 @@ class TargetManager {
     if (!closestAbsorbablePlayer && !closestAbsorbableAsteroid) {
       return new Target(Target.TARGET_POINT, {
         id: 0,
-        x: randomInt(this.borderMargin, worldWidth),
-        y: randomInt(this.borderMargin, worldHeight),
+        x: randomInt(this.borderMarginRadiusMultiplier, worldWidth),
+        y: randomInt(this.borderMarginRadiusMultiplier, worldHeight),
         r: 0,
       });
     }
