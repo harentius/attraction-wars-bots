@@ -36,20 +36,23 @@ class BotAIFactory {
     this.borderMarginRadiusMultiplier = borderMarginRadiusMultiplier;
   }
 
-  public create(onDisconnect: () => void): BotAI {
+  public create(afterRefresh: (botAi: BotAI) => void): BotAI {
     const storage = new Storage();
-    storage.on(Storage.DISCONNECT, onDisconnect);
     const client = new Client(storage, this.serverUrl);
     const bot = new Bot(this.generateUsername(), client, storage, this.visibilityRadius);
-    return new BotAI(
+    const botAi = new BotAI(
       bot,
       this.targetManager,
       this.directionManager,
       this.keyPressStateFactory,
       this.ticksBeforeChangeDirection,
       this.tooBigMultiplier,
-      this.borderMarginRadiusMultiplier
+      this.borderMarginRadiusMultiplier,
     );
+
+    storage.on(Storage.AFTER_REFRESH, () => afterRefresh(botAi));
+
+    return botAi;
   }
 
   private generateUsername(): string {

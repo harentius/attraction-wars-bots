@@ -49,6 +49,7 @@ class BotAIManager {
 
     for (const botAI of this.botAIs) {
       if (botAI.isTooBig()) {
+        console.log(`Bot ${botAI.id} is too big. Logout`);
         botAI.logout();
         return;
       }
@@ -71,14 +72,15 @@ class BotAIManager {
   }
 
   private addBotAI(): void {
-    const botAI = this.botAIFactory.create(() => this.deleteBotAi(botAI));
+    const botAI = this.botAIFactory.create((botAi) => this.deleteBotAi(botAi));
     this.botAIs.push(botAI);
   }
 
   private deleteBotAi(botAI: BotAI): void {
-    botAI.clean();
+    console.log(`Bot ${botAI.id} disconnected`);
     const botIndex = this.botAIs.findIndex((v) => botAI.id === v.id);
     this.botAIs.splice(botIndex, 1);
+    botAI.clean();
   }
 
   private logoutRandomBot(): void {
@@ -87,6 +89,7 @@ class BotAIManager {
     }
 
     const index = randomInt(0, this.botAIs.length - 1);
+    console.log(`Logout random bot. Logout ${this.botAIs[index].id}`);
     this.botAIs[index].logout();
     this.botAIs.splice(index, 1);
   }
