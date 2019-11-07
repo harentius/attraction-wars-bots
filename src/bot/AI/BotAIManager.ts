@@ -1,6 +1,5 @@
 import BotAI from './BotAI';
 import BotAIFactory from './BotAIFactory';
-import randomInt from '../../utils/randomInt';
 
 class BotAIManager {
   private readonly botAIFactory: BotAIFactory;
@@ -8,7 +7,7 @@ class BotAIManager {
   private readonly botManagerInterval: number;
   private readonly minPlayers: number;
   private readonly maxPlayers: number;
-  private readonly botAIs: BotAI[];
+  private readonly botAIs: Map<number, BotAI>;
 
   constructor(
     botAIFactory: BotAIFactory,
@@ -22,13 +21,13 @@ class BotAIManager {
     this.botManagerInterval = botManagerInterval;
     this.minPlayers = minPlayers;
     this.maxPlayers = maxPlayers;
-    this.botAIs = [];
+    this.botAIs = new Map<number, BotAI>();
     this.init();
   }
 
   public startLoop(): void {
     setInterval(() => {
-      for (const botAI of this.botAIs) {
+      for (const botAI of this.botAIs.values()) {
         botAI.tick();
       }
     }, this.tickInterval);
@@ -42,12 +41,12 @@ class BotAIManager {
     const onlineCount = this.getOnlineCount();
 
     if (onlineCount >= this.maxPlayers) {
-      this.logoutRandomBot();
+      this.logoutExtraBot();
     } else if ((onlineCount < this.minPlayers) || Math.random() > 0.1) {
       this.addBotAI();
     }
 
-    for (const botAI of this.botAIs) {
+    for (const botAI of this.botAIs.values()) {
       if (botAI.isTooBig()) {
         console.log(`Bot ${botAI.id} is too big. Logout`);
         botAI.logout();
@@ -65,33 +64,32 @@ class BotAIManager {
   }
 
   private getOnlineCount(): number {
-    return this.botAIs.length > 0
-      ? this.botAIs[0].getWorldData().serverStatistics.onlineCount
+    return this.botAIs.size > 0
+      ? this.botAIs.get(this.botAIs.keys().next().value).getWorldData().serverStatistics.onlineCount
       : 0
     ;
   }
 
   private addBotAI(): void {
-    const botAI = this.botAIFactory.create((botAi) => this.deleteBotAi(botAi));
-    this.botAIs.push(botAI);
+    const botAI = this.botAIFactory.create((b) => this.deleteBotAi(b));
+    this.botAIs.set(botAI.id, botAI);
   }
 
   private deleteBotAi(botAI: BotAI): void {
     console.log(`Bot ${botAI.id} disconnected`);
-    const botIndex = this.botAIs.findIndex((v) => botAI.id === v.id);
-    this.botAIs.splice(botIndex, 1);
+    this.botAIs.delete(botAI.id);
     botAI.clean();
   }
 
-  private logoutRandomBot(): void {
-    if (this.botAIs.length === 0) {
+  private logoutExtraBot(): void {
+    if (this.botAIs.size === 0) {
       return;
     }
 
-    const index = randomInt(0, this.botAIs.length - 1);
-    console.log(`Logout random bot. Logout ${this.botAIs[index].id}`);
-    this.botAIs[index].logout();
-    this.botAIs.splice(index, 1);
+    const key = this.botAIs.keys().next().value;
+    console.log(`Logout extra bot. Logout ${key}`);
+    this.botAIs.get(key).logout();
+    this.botAIs.delete(key);
   }
 }
 

@@ -36,7 +36,7 @@ class BotAIFactory {
     this.borderMarginRadiusMultiplier = borderMarginRadiusMultiplier;
   }
 
-  public create(afterRefresh: (botAi: BotAI) => void): BotAI {
+  public create(afterRefresh: (b: BotAI) => void): BotAI {
     const storage = new Storage();
     const client = new Client(storage, this.serverUrl);
     const bot = new Bot(this.generateUsername(), client, storage, this.visibilityRadius);
