@@ -41,7 +41,9 @@ class BotAIManager {
     const onlineCount = this.getOnlineCount();
 
     if (onlineCount >= this.maxPlayers) {
-      this.logoutExtraBot();
+      do {
+        this.logoutExtraBot();
+      } while (onlineCount >= this.maxPlayers && this.botAIs.size > 0);
     } else if ((onlineCount < this.minPlayers) || Math.random() > 0.1) {
       this.addBotAI();
     }
