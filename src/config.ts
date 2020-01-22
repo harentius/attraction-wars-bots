@@ -20,7 +20,7 @@ const config: {
   minDistanceToDangerObject: 50,
   ticksBeforeChangeDirection: 500,
   minPlayers: 5,
-  maxPlayers: 20,
+  maxPlayers: 18,
   tooBigMultiplier: 1.0 / 60.0,
   borderMarginRadiusMultiplier: 2,
 };

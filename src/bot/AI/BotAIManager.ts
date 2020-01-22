@@ -1,5 +1,6 @@
 import BotAI from './BotAI';
 import BotAIFactory from './BotAIFactory';
+import randomInt from '../../utils/randomInt';
 
 class BotAIManager {
   private readonly botAIFactory: BotAIFactory;
@@ -45,7 +46,7 @@ class BotAIManager {
       for (let i = 0; i < delta; i++) {
         this.logoutExtraBot();
       }
-    } else if ((onlineCount < this.minPlayers) || Math.random() > 0.1) {
+    } else if ((onlineCount < this.minPlayers) || Math.random() > 0.5) {
       this.addBotAI();
     }
 
@@ -89,7 +90,8 @@ class BotAIManager {
       return;
     }
 
-    const key = this.botAIs.keys().next().value;
+    const keys =  Array.from(this.botAIs.keys());
+    const key = keys[randomInt(0, keys.length - 1)];
     console.log(`Logout extra bot. Logout ${key}`);
     this.botAIs.get(key).logout();
     this.botAIs.delete(key);
