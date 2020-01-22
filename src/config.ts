@@ -21,7 +21,7 @@ const config: {
   ticksBeforeChangeDirection: 500,
   minPlayers: 5,
   maxPlayers: 20,
-  tooBigMultiplier: 1.0 / 30.0,
+  tooBigMultiplier: 1.0 / 60.0,
   borderMarginRadiusMultiplier: 2,
 };
 
