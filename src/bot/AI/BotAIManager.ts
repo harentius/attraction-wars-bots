@@ -42,7 +42,7 @@ class BotAIManager {
     const delta = onlineCount - this.maxPlayers;
 
     if (delta > 1) {
-      for (let i = 0; i++; i < delta) {
+      for (let i = 0; i < delta; i++) {
         this.logoutExtraBot();
       }
     } else if ((onlineCount < this.minPlayers) || Math.random() > 0.1) {
