@@ -39,11 +39,12 @@ class BotAIManager {
 
   private update(): void {
     const onlineCount = this.getOnlineCount();
+    const delta = onlineCount - this.maxPlayers;
 
-    if (onlineCount >= this.maxPlayers) {
-      do {
+    if (delta > 1) {
+      for (let i = 0; i++; i < delta) {
         this.logoutExtraBot();
-      } while (onlineCount >= this.maxPlayers && this.botAIs.size > 0);
+      }
     } else if ((onlineCount < this.minPlayers) || Math.random() > 0.1) {
       this.addBotAI();
     }
