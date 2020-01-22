@@ -68,8 +68,11 @@ class BotAIManager {
   }
 
   private getOnlineCount(): number {
+    const keys =  Array.from(this.botAIs.keys());
+    const key = keys[randomInt(0, keys.length - 1)];
+
     return this.botAIs.size > 0
-      ? this.botAIs.get(this.botAIs.keys().next().value).getWorldData().serverStatistics.onlineCount
+      ? this.botAIs.get(key).getWorldData().serverStatistics.onlineCount
       : 0
     ;
   }
